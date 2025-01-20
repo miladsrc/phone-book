@@ -5,36 +5,33 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Builder
 @Getter
 @Setter
 @AllArgsConstructor
-@Entity
+@Builder
 @NoArgsConstructor
+@Entity
 @Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    Long id;
 
-    @Basic(optional = false)
-    @Column(unique = true)
-    private String username;
+    @Column(name = "user-name")
+    String name;
 
-    @Basic(optional = false)
-    @Column(unique = true)
-    private String passwordHash;
+    @Column(nullable = false, unique = true)
+    String username;
+
+    @Column(nullable = false)
+    String password;
+
+    @Column(nullable = false, unique = true)
+    String email;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_contacts", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Contact> contacts = new HashSet<>();
 
-    private boolean isAccountLocked;
-    private String role;
-
-    public User(String username, String passwordHash) {
-        this.username = username;
-        this.passwordHash = passwordHash;
-    }
 }
