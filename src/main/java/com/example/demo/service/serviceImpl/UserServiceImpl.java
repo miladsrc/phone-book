@@ -8,8 +8,7 @@ import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,13 +27,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto addUser(UserDto userDto) {
 
-         User user = modelMapper.map(userDto, User.class);
+        User user = modelMapper.map(userDto, User.class);
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDto.class);
     }
 
     @Override
     public UserDto getUser(Long id) {
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
 
@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAllUsers() {
+
         List<User> userList = userRepository.findAll();
 
         return userList.stream()
@@ -52,18 +53,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userDto, Long id) {
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
 
         User updatedUser = modelMapper.map(userDto, User.class);
-
         User savedUser = userRepository.save(updatedUser);
-
         return modelMapper.map(savedUser, UserDto.class);
     }
 
     @Override
     public void deleteUser(Long id) {
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
 
