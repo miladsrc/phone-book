@@ -1,6 +1,6 @@
-package com.example.demo;
+package com.demo;
 
-import org.modelmapper.ModelMapper;
+import com.demo.mapper.UserMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +14,5 @@ public class DemoApplication {
 
 
     @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
-
+    public UserMapper userMapper() { return new UserMapper(); }
 }

@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +31,17 @@ public class SpringSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorizeRequests) -> {
-                            authorizeRequests.requestMatchers("/swagger-ui/**").permitAll();
+                .authorizeHttpRequests((
+                        authorizeRequests) -> {
+                            authorizeRequests.requestMatchers(
+                                    "/swagger-ui/**",
+                                    "/api/swagger-ui/**",
+                                    "/api/v1/auth/**",
+                                    "/v2/api-docs",
+                                    "/v3/api-docs",
+                                    "/v2/api-docs/**",
+                                    "/v3/api-docs/**"
+                            ).permitAll();
                             authorizeRequests.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
                             authorizeRequests.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
                             authorizeRequests.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
