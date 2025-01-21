@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -22,6 +21,18 @@ public class Contact {
     public Contact(String firstName, String lastName, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Contact(String firstName, String lastName, String phoneNumber, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
+    public Contact(String firstName, String phoneNumber) {
+        this.firstName = firstName;
         this.phoneNumber = phoneNumber;
     }
 }

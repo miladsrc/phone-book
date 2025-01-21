@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class UserController {
 
     @Operation(summary = "Add a new user", description = "Creates a new user.")
     @ApiResponse(responseCode = "201", description = "User created successfully")
-    @PostMapping("/add")
+    @PostMapping(value = "/add", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE})
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
         UserDto savedUser = userService.addUser(userDto);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
@@ -34,7 +35,7 @@ public class UserController {
     @Operation(summary = "Get user by ID", description = "Fetches a user by the provided ID.")
     @ApiResponse(responseCode = "200", description = "User found")
     @ApiResponse(responseCode = "404", description = "User not found")
-    @GetMapping("/get/{id}")
+    @GetMapping(value = "/get/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE})
     public ResponseEntity<UserDto> getUser(@Parameter(description = "ID of the user to be fetched") @PathVariable("id") Long userId) {
         UserDto savedUser = userService.getUser(userId);
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
@@ -42,7 +43,7 @@ public class UserController {
 
     @Operation(summary = "Get all users", description = "Retrieves all users from the system.")
     @ApiResponse(responseCode = "200", description = "Users fetched successfully")
-    @GetMapping("/getAll")
+    @GetMapping(value = "/getAll", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE})
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> userList = userService.getAllUsers();
         return ResponseEntity.ok(userList);
@@ -51,7 +52,7 @@ public class UserController {
     @Operation(summary = "Update user", description = "Updates user details by ID.")
     @ApiResponse(responseCode = "200", description = "User updated")
     @ApiResponse(responseCode = "404", description = "User not found")
-    @PutMapping("/update/{id}")
+    @PutMapping(value = "/update/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE})
     public ResponseEntity<UserDto> updateUser(
             @RequestBody UserDto userDto,
             @Parameter(description = "ID of the user to be updated") @PathVariable("id") Long userId) {
@@ -62,7 +63,7 @@ public class UserController {
     @Operation(summary = "Delete user", description = "Deletes a user by ID.")
     @ApiResponse(responseCode = "200", description = "User deleted")
     @ApiResponse(responseCode = "404", description = "User not found")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value ="/delete/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.ALL_VALUE})
     public ResponseEntity<String> deleteUser(@Parameter(description = "ID of the user to be deleted") @PathVariable("id") Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.ok("User deleted successfully");

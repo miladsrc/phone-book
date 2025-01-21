@@ -32,7 +32,15 @@ public class SpringSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeRequests) -> {
-                            authorizeRequests.requestMatchers("/swagger-ui/**").permitAll();
+                            authorizeRequests.requestMatchers(
+                                    "/api/swagger-ui/**",
+                                    "/swagger-ui/**",
+                                    "/api/v1/auth/**",
+                                    "/v2/api-docs",
+                                    "/v3/api-docs",
+                                    "/v2/api-docs/**",
+                                    "/v3/api-docs/**"
+                                    ).permitAll();
                             authorizeRequests.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
                             authorizeRequests.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
                             authorizeRequests.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");

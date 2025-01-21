@@ -30,7 +30,7 @@ public class User {
     @Column(nullable = false, unique = true)
     String email;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "user_contacts", joinColumns = @JoinColumn(name = "user_id"))
     private Set<Contact> contacts = new HashSet<>();
 
