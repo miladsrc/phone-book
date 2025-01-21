@@ -3,7 +3,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -29,6 +30,7 @@ public class Contact   {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
+
 }
 
 

@@ -13,20 +13,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactDto {
-
-    @JsonProperty("id")
     private Long id;
-
-    @JsonProperty("firstName")
     private String firstName;
-
-    @JsonProperty("lastName")
     private String lastName;
-
-    @JsonProperty("phoneNumber")
     private String phoneNumber;
-
-    @JsonProperty("email")
     private String email;
 }
 
