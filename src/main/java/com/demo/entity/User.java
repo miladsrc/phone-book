@@ -5,10 +5,11 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Builder
-@Entity
-@Table(name = "users")
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "USERS")
 public class User {
 
     @Id
@@ -24,55 +25,7 @@ public class User {
     @Column(name = "EMAIL", nullable = false, unique = true)
     String email;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_contacts", joinColumns = @JoinColumn(name = "user_id"))
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST}, orphanRemoval = true)
     private Set<Contact> contacts = new HashSet<>();
 
-    //CONSTRUCTOR
-
-    public User() {
-    }
-
-
-    //GETTER AND SETTER
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Set<Contact> getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(Set<Contact> contacts) {
-        this.contacts = contacts;
-    }
 }
