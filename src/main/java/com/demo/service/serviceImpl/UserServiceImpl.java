@@ -1,6 +1,6 @@
 package com.demo.service.serviceImpl;
 
-import com.demo.dto.UsersDto;
+import com.demo.dto.UserDto;
 import com.demo.exception.ResourceNotFoundException;
 import com.demo.repository.UserRepository;
 import com.demo.entity.User;
@@ -24,33 +24,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersDto addUser(UsersDto userDto) {
+    public UserDto addUser(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
         User savedUser = userRepository.save(user);
-        return modelMapper.map(savedUser, UsersDto.class);
+        return modelMapper.map(savedUser, UserDto.class);
     }
 
     @Override
-    public UsersDto getUser(Long id) {
+    public UserDto getUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
-        return modelMapper.map(user, UsersDto.class);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
-    public List<UsersDto> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(user -> modelMapper.map(user, UsersDto.class))
+                .map(user -> modelMapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UsersDto updateUser(UsersDto userDto, Long id) {
+    public UserDto updateUser(UserDto userDto, Long id) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
         modelMapper.map(userDto, User.class);
         User savedUser = userRepository.save(existingUser);
-        return modelMapper.map(savedUser, UsersDto.class);
+        return modelMapper.map(savedUser, UserDto.class);
     }
 
     @Override
