@@ -56,21 +56,17 @@ public class SpringSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        // Define a regular user with "USER" role
         UserDetails user = User.builder()
                 .username("user")
                 .password(passwordEncoder().encode("password"))
-                .roles("USER")  // Assign "USER" role to this user
+                .roles("USER")
                 .build();
-
-        // Define an admin with "ADMIN" role
         UserDetails admin = User.builder()
                 .username("admin")
                 .password(passwordEncoder().encode("password"))
-                .roles("ADMIN")  // Assign "ADMIN" role to this user
+                .roles("ADMIN")
                 .build();
 
-        // Return InMemoryUserDetailsManager with both users
         return new InMemoryUserDetailsManager(user, admin);
     }
 

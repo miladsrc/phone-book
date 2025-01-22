@@ -1,7 +1,6 @@
 package com.demo.entity;
 
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +26,7 @@ public class User {
     @Column(name = "EMAIL", nullable = false, unique = true)
     String email;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH}, orphanRemoval = true)
-    private Set<Contact> contacts = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private Set<Contact> contact = new HashSet<>();
 
 }

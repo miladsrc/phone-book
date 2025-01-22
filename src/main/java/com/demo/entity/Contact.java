@@ -27,10 +27,12 @@ public class Contact   {
     @Column(name = "EMAIL", length = 50)
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
+    @Column(name = "USER_ID",insertable = false, updatable = false)
+    private Long userId;
 }
 
 

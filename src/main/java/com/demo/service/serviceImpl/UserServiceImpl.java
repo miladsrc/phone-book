@@ -12,8 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -21,14 +22,24 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final ContactRepository contactRepository;
     private final ModelMapper modelMapper;
+    private final ContactRepository contactRepository;
 
 
     @Override
-    @Transactional
     public UserDto addUser(UserDto userDto) {
-
+        User user = modelMapper.map(userDto, User.class);
+        Set<Contact> contacts = userDto.getContact().stream()
+                .map(contactDto -> {
+                    Contact contact = modelMapper.map(contactDto, Contact.class);
+                    contact.setUser(user);
+                    return contact;
+                })
+                .collect(Collectors.toSet());
+        user.setContact(null);
+        user.setContact(contacts);
+        userRepository.save(user);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
@@ -45,33 +56,17 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public UserDto updateUser(UserDto userDto, Long id) {
-        return null;
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
+        user.setUsername(userDto.getUsername());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        User savedUser = userRepository.saveAndFlush(user);
+        return modelMapper.map(savedUser, UserDto.class);
     }
-
-//    @Override
-//    @Transactional
-//    public UserDto updateUser(UserDto userDto, Long id) {
-//
-//        User existingUser = userRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
-//
-//        modelMapper.map(userDto, existingUser);
-//
-//        List<Contact> newContacts = userDto.getContacts().stream()
-//                .map(contactDtos -> {
-//                    return modelMapper.map(contactDtos, Contact.class);
-//                })
-//                .collect(Collectors.toList());
-//
-//        userService.updateContacts(existingUser, newContacts);
-//
-//        userRepository.updateContact()
-//        User savedUser = userRepository.save(existingUser);
-//
-//        return modelMapper.map(savedUser, UserDto.class);
-
 
     @Override
     public void deleteUser(Long id) {
@@ -79,5 +74,4 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
         userRepository.delete(user);
     }
-
 }

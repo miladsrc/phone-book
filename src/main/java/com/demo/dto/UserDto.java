@@ -7,9 +7,8 @@ import lombok.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
 
 @Getter
 @Setter
@@ -20,7 +19,7 @@ public class UserDto {
   private String username;
   private String password;
   private String email;
-  private List<ContactDto> contract;
+  private Set<ContactDto> contact;
 }
 
 
