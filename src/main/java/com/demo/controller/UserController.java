@@ -4,6 +4,7 @@ import com.demo.dto.UserDto;
 import com.demo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +23,8 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    @Transactional
     @Operation(summary = "Add a new user", description = "Creates a new user.")
     @PostMapping("/add")
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
