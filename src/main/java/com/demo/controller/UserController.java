@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @Operation(summary = "Get user by ID", description = "Fetches a user by the provided ID.")
-    @GetMapping(value = "/{id}", headers = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@Parameter(description = "ID of the user to be fetched") @PathVariable("id") Long userId) {
         UserDto savedUser = userService.getUser(userId);
         return new ResponseEntity<>(savedUser, HttpStatus.OK);

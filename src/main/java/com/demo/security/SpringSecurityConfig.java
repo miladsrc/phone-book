@@ -16,12 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SpringSecurityConfig {
 
-    /*
-    in here we use static to make it use for
-    once and also you should know
-    bcryptPasswordEncoder uses algorithm
-    to hash the password
-     */
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -34,13 +28,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests((
                         authorizeRequests) -> {
                             authorizeRequests.requestMatchers(
-                                    "/swagger-ui/**",
-                                    "/api/swagger-ui/**",
-                                    "/api/v1/auth/**",
-                                    "/v2/api-docs",
-                                    "/v3/api-docs",
-                                    "/v2/api-docs/**",
-                                    "/v3/api-docs/**"
+                                    "/swagger-ui/**"
                             ).permitAll();
                             authorizeRequests.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
                             authorizeRequests.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
